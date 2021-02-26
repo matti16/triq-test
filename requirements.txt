@@ -1,5 +1,7 @@
 scikit-learn
-joblib
-fastapi
+joblib~=1.0.1
+fastapi~=0.63.0
 uvicorn
-pydantic
+pydantic~=1.7.3
+requests~=2.25.1
+pandas~=1.2.2

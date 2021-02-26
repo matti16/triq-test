@@ -1,9 +1,9 @@
-from fastapi import HTTPException
 from pydantic import BaseModel
 from joblib import load
 from typing import Optional
 
-from prediction_app.settings import MODEL_PATH
+from .settings import MODEL_PATH
+from .hr_data import HrData
 
 
 class PredictionParams(BaseModel):
@@ -12,7 +12,7 @@ class PredictionParams(BaseModel):
 
 
 class PredictionResponse(BaseModel):
-    rest: bool
+    prediction: bool
     message: Optional[str] = ""
 
 
@@ -23,6 +23,14 @@ class HrModel:
         :param model_path: path to the joblib file of the model
         """
         self.model = load(model_path)
+        self.hr_data = HrData()
 
     def predict(self, params: PredictionParams) -> PredictionResponse:
-        return PredictionResponse(rest=False)
+        """
+
+        :param params:
+        :return:
+        """
+        features = self.hr_data.get_hr_data(params.username, params.datetime)
+        prediction = bool(self.model.predict(features))
+        return PredictionResponse(prediction=prediction)

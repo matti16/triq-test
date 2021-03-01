@@ -14,6 +14,6 @@ def predict(params: PredictionParams) -> PredictionResponse:
     Prediction endpoint.
     It accepts a JSON body containing username and datetime and returns a JSON response containing the prediction.
     :param params: PredictionParams with username and datetime
-    :return: a PredictionResponse with the actual prediction (True for rest).
+    :return: a PredictionResponse containing the actual prediction (True for rest).
     """
     return model.predict(params)

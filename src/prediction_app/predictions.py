@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from joblib import load
 
-from .settings import MODEL_PATH
+from .settings import MODEL_PATH, HR_DATETIME_FORMAT
 from .hr_data import HrData
 from .exceptions import PredictionNotAvailable
 
@@ -9,12 +9,12 @@ from .exceptions import PredictionNotAvailable
 class PredictionParams(BaseModel):
     username: str = Field(
         title="Username",
-        description="Username for which you want predictions",
+        description="Username for which to calculate the prediction",
         min_length=1
     )
     datetime: str = Field(
         title="Datetime",
-        description="Datetime for which you want predictions",
+        description=f"Datetime for which to calculate the prediction in the format {HR_DATETIME_FORMAT}",
         regex=r"\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}"
     )
 

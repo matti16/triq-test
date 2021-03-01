@@ -3,7 +3,7 @@ import pandas as pd
 import datetime
 
 from .exceptions import DataFetchError, PredictionNotAvailable
-from .settings import HR_DATA_ENDPOINT, HR_DATA_COLS, HR_DATETIME_FORMAT
+from .settings import HR_DATA_ENDPOINT, HR_DATA_COLS, HR_DATETIME_FORMAT, ENDPOINT_TIMEOUT
 
 pd.options.mode.chained_assignment = None
 
@@ -26,7 +26,7 @@ class HrData:
         url = f"{self.endpoint}/?name={username}"
 
         try:
-            data = requests.get(url, timeout=1.5)
+            data = requests.get(url, timeout=ENDPOINT_TIMEOUT)
         except requests.exceptions.RequestException:
             raise DataFetchError()
 

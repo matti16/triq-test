@@ -5,6 +5,7 @@ API_VERSION = "v1"
 MODEL_PATH = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "model", "hr_model.joblib")
 
 HR_DATA_ENDPOINT = os.getenv("HR_DATA_ENDPOINT", "https://hrv4roland.herokuapp.com/hrv")
+ENDPOINT_TIMEOUT = 1.5
 
 HR_DATETIME_FORMAT = "%Y-%m-%d %H:%M"
 

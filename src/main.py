@@ -1,18 +1,19 @@
 from fastapi import FastAPI
 
-from prediction_app.predictions import PredictionParams, HrModel
+from prediction_app.predictions import PredictionParams, PredictionResponse, HrModel
+from prediction_app.settings import API_VERSION
 
-# initiate API
 app = FastAPI()
 
 model = HrModel()
 
 
-@app.post("/predict")
-def predict(params: PredictionParams):
+@app.post(f"/api/{API_VERSION}/predict")
+def predict(params: PredictionParams) -> PredictionResponse:
     """
-    Prediction endpoint
-    :param params: username and datetime for which we want the prediction
-    :return: True if the model predicts rest, false otherwise
+    Prediction endpoint.
+    It accepts a JSON body containing username and datetime and returns a JSON response containing the prediction.
+    :param params: PredictionParams with username and datetime
+    :return: a PredictionResponse with the actual prediction (True for rest).
     """
     return model.predict(params)

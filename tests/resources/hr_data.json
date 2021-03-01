@@ -1,0 +1,26 @@
+[
+  {
+    "date": "22.08.2020 07:27",
+    "hrpeak": "93",
+    "hrrest": "53",
+    "hrstanding": "78",
+    "hrvrest": "48",
+    "hrvstanding": "10"
+  },
+  {
+    "date": "21.08.2020 06:18",
+    "hrpeak": "91",
+    "hrrest": "51",
+    "hrstanding": "79",
+    "hrvrest": "57",
+    "hrvstanding": "12"
+  },
+  {
+    "date": "20.08.2020 05:44",
+    "hrpeak": "94",
+    "hrrest": "56",
+    "hrstanding": "79",
+    "hrvrest": "46",
+    "hrvstanding": "9"
+  }
+]

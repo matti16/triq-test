@@ -1,19 +1,27 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from joblib import load
-from typing import Optional
 
 from .settings import MODEL_PATH
 from .hr_data import HrData
+from .exceptions import PredictionNotAvailable
 
 
 class PredictionParams(BaseModel):
-    username: str
-    datetime: str
+    username: str = Field(
+        title="Username",
+        description="Username for which you want predictions",
+        min_length=1
+    )
+    datetime: str = Field(
+        title="Datetime",
+        description="Datetime for which you want predictions",
+        regex=r"\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}"
+    )
 
 
 class PredictionResponse(BaseModel):
     prediction: bool
-    message: Optional[str] = ""
+    hours_from_last_hr: float
 
 
 class HrModel:
@@ -27,10 +35,21 @@ class HrModel:
 
     def predict(self, params: PredictionParams) -> PredictionResponse:
         """
-
-        :param params:
-        :return:
+        Predict if a user should rest or not at a given datetime.
+        It gets the input data from HrData and calls self.model.predict.
+        :param params: username and datetime string
+        :return: A PredictionResponse with a boolean prediction and
+                 the number of hours between the last HR measurement and the requested datetime
         """
-        features = self.hr_data.get_hr_data(params.username, params.datetime)
-        prediction = bool(self.model.predict(features))
-        return PredictionResponse(prediction=prediction)
+        data = self.hr_data.get_hr_data(params.username)
+        features = self.hr_data.pre_process_hr_data(data, params.datetime)
+
+        if len(features):
+            features = features[0]
+            prediction = bool(self.model.predict([features]))
+            hours_from_last_hr = features[-1]
+            return PredictionResponse(
+                prediction=prediction, hours_from_last_hr=hours_from_last_hr
+            )
+        else:
+            raise PredictionNotAvailable()

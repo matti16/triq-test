@@ -15,7 +15,7 @@ class PredictionParams(BaseModel):
     datetime: str = Field(
         title="Datetime",
         description=f"Datetime for which to calculate the prediction in the format {HR_DATETIME_FORMAT}",
-        regex=r"\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}"
+        regex=r"^\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}$"
     )
 
 

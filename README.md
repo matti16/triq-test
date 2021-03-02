@@ -25,6 +25,12 @@ uvicorn main:app --port 80
 #### Swagger
 After the setup is successful, you should be able to see the auto-generate swagger at [http://127.0.0.1/docs][http://127.0.0.1/docs].
 
+#### Tests
+In order to run unit tests, simply run the command
+```shell script
+pytest
+```
+
 ## Predictions
 Finally, you should be able to get predictions for a given user and datetime.
 Here an example of request:
